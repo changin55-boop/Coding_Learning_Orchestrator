@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+<title>🚀 Coding Learning Journey</title>
+ 
+<style>
+ 
+:root{
+--blue:#A9D6FF;
+--lavender:#E5D8FF;
+--mint:#DFF7EC;
+--yellow:#FFF5CC;
+ 
+--bg:#F8FAFF;
+--card:#FFFFFF;
+--text:#4F5D75;
+--border:#E9EDF5;
+}
+ 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI','Pretendard',sans-serif;
+}
+ 
+body{
+background:var(--bg);
+height:100vh;
+}
+ 
+.container{
+display:flex;
+height:100vh;
+}
+ 
+.sidebar{
+width:300px;
+background:white;
+border-right:1px solid var(--border);
+padding:24px;
+}
+ 
+.logo{
+font-size:24px;
+font-weight:700;
+color:var(--text);
+margin-bottom:24px;
+}
+ 
+.progress-card{
+background:linear-gradient(
+135deg,
+#eef7ff,
+#f4f0ff
+);
+ 
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+}
+ 
+.progress-title{
+color:#667085;
+margin-bottom:8px;
+}
+ 
+.progress-number{
+font-size:28px;
+font-weight:700;
+}
+ 
+.progress-bar{
+height:10px;
+background:white;
+border-radius:999px;
+overflow:hidden;
+margin-top:12px;
+}
+ 
+.progress-fill{
+width:11%;
+height:100%;
+background:var(--blue);
+}
+ 
+.badge{
+display:inline-block;
+margin-top:12px;
+padding:6px 12px;
+border-radius:999px;
+background:var(--mint);
+color:#37795D;
+font-size:13px;
+}
+ 
+.steps{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+ 
+.step{
+padding:14px;
+border-radius:14px;
+font-size:14px;
+}
+ 
+.current{
+background:var(--lavender);
+font-weight:600;
+}
+ 
+.locked{
+background:#F1F3F8;
+color:#9AA3B2;
+}
+ 
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+ 
+.header{
+background:white;
+border-bottom:1px solid var(--border);
+padding:20px 30px;
+}
+ 
+.header h2{
+color:var(--text);
+}
+ 
+.mission{
+margin-top:8px;
+color:#667085;
+}
+ 
+.chat-wrapper{
+flex:1;
+padding:20px;
+}
+ 
+.chat-card{
+height:100%;
+background:white;
+border-radius:24px;
+overflow:hidden;
+ 
+box-shadow:
+0 8px 25px rgba(0,0,0,0.06);
+}
+ 
+.chat-card iframe{
+width:100%;
+height:100%;
+border:none;
+}
+ 
+@media (max-width:900px){
+ 
+.container{
+flex-direction:column;
+}
+ 
+.sidebar{
+width:100%;
+border-right:none;
+border-bottom:1px solid var(--border);
+}
+}
+ 
+</style>
+</head>
+ 
+<body>
+ 
+<div class="container">
+ 
+<aside class="sidebar">
+ 
+<div class="logo">
+🚀 Coding Journey
+</div>
+ 
+<div class="progress-card">
+ 
+<div class="progress-title">
+학습 진행률
+</div>
+ 
+<div class="progress-number">
+11%
+</div>
+ 
+<div class="progress-bar">
+<div class="progress-fill"></div>
+</div>
+ 
+<div class="badge">
+🌱 입문 학습자
+</div>
+ 
+</div>
+ 
+<div class="steps">
+ 
+<div class="step current">
+✅ STEP 1<br>
+공통 문제 생성
+</div>
+ 
+<div class="step locked">🔒 STEP 2<br>풀이 제출</div>
+<div class="step locked">🔒 STEP 3<br>수준 판별</div>
+<div class="step locked">🔒 STEP 4<br>관심사 입력</div>
+<div class="step locked">🔒 STEP 5<br>실생활 문제</div>
+<div class="step locked">🔒 STEP 6<br>자연어 알고리즘</div>
+<div class="step locked">🔒 STEP 7<br>플로우차트</div>
+<div class="step locked">🔒 STEP 8<br>문답</div>
+<div class="step locked">🔒 STEP 9<br>최종 피드백</div>
+ 
+</div>
+ 
+</aside>
+ 
+<main class="main">
+ 
+<div class="header">
+ 
+<h2>
+👨‍🏫 코딩 학습 오케스트레이터
+</h2>
+ 
+<div class="mission">
+현재 단계: 공통 문제 생성
+</div>
+ 
+</div>
+ 
+<div class="chat-wrapper">
+ 
+<div class="chat-card">
+ 
+/environments/9324e73a-cd4e-e049-b7ba-177af6165e9c/bots/crbf2_flowchart_agent_02_hhukOx/webchat?__version__=2&enableFileAttachment=false&cliAgent=true"
+allow="microphone"
+loading="lazy">
+</iframe>
+ 
+</div>
+ 
+</div>
+ 
+</main>
+ 
+</div>
+ 
+</body>
+</html>
