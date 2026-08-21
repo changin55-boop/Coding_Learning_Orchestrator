@@ -1,291 +1,125 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#080b17" />
-  <title>Flowchart AI Studio</title>
-  <style>
-    :root {
-      --bg: #080b17;
-      --bg-2: #0d1224;
-      --glass: rgba(13, 18, 36, .78);
-      --glass-solid: #10162a;
-      --card: rgba(255, 255, 255, .055);
-      --card-hover: rgba(255, 255, 255, .09);
-      --line: rgba(255, 255, 255, .105);
-      --line-strong: rgba(255, 255, 255, .17);
-      --text: #f6f7fb;
-      --muted: #9da8be;
-      --primary: #8b5cf6;
-      --secondary: #22d3ee;
-      --success: #42e6a4;
-      --danger: #fb7185;
-      --shadow: 0 32px 90px rgba(0, 0, 0, .48);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --sidebar: 276px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina Learning Concierge</title>
 
-    body.light {
-      --bg: #eef2ff;
-      --bg-2: #f8faff;
-      --glass: rgba(255, 255, 255, .76);
-      --glass-solid: #ffffff;
-      --card: rgba(17, 24, 39, .045);
-      --card-hover: rgba(99, 102, 241, .09);
-      --line: rgba(20, 30, 60, .10);
-      --line-strong: rgba(20, 30, 60, .17);
-      --text: #131a2e;
-      --muted: #667085;
-      --shadow: 0 30px 80px rgba(52, 64, 105, .20);
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    * { box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; margin: 0; }
-    button { font: inherit; }
+        body {
+            height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f7fb;
+            overflow: hidden;
+        }
 
-    body {
-      overflow: hidden;
-      color: var(--text);
-      background: var(--bg);
-      font-family: Inter, Pretendard, "Segoe UI", "Noto Sans KR", sans-serif;
-      transition: background .28s ease, color .28s ease;
-    }
+        .header {
+            height: 72px;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
 
-    .aurora, .noise { position: fixed; inset: 0; pointer-events: none; }
-    .aurora { overflow: hidden; z-index: 0; }
-    .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .42; animation: float 14s ease-in-out infinite alternate; }
-    .orb.one { width: 480px; height: 480px; top: -180px; left: -100px; background: #7c3aed; }
-    .orb.two { width: 420px; height: 420px; right: -80px; bottom: -180px; background: #0891b2; animation-delay: -5s; }
-    .orb.three { width: 260px; height: 260px; left: 48%; top: 34%; background: #4f46e5; opacity: .18; animation-delay: -9s; }
-    @keyframes float { to { transform: translate3d(38px, 28px, 0) scale(1.08); } }
-    .noise { z-index: 1; opacity: .035; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E"); }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
 
-    .page { position: relative; z-index: 2; width: 100%; height: 100dvh; padding: clamp(10px, 1.7vw, 24px); }
-    .app {
-      width: min(1640px, 100%); height: 100%; margin: 0 auto;
-      display: grid; grid-template-columns: var(--sidebar) minmax(0, 1fr);
-      overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-xl);
-      background: var(--glass); box-shadow: var(--shadow);
-      backdrop-filter: blur(28px) saturate(130%); -webkit-backdrop-filter: blur(28px) saturate(130%);
-      animation: reveal .65s cubic-bezier(.2,.8,.2,1);
-    }
-    @keyframes reveal { from { opacity: 0; transform: translateY(14px) scale(.992); } }
+        .logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
 
-    aside { min-width: 0; padding: 20px 16px; display: flex; flex-direction: column; border-right: 1px solid var(--line); background: rgba(255,255,255,.018); }
-    .brand { display: flex; align-items: center; gap: 12px; padding: 2px 4px 20px; }
-    .brand-mark { position: relative; width: 43px; height: 43px; flex: 0 0 auto; display: grid; place-items: center; overflow: hidden; border-radius: 14px; color: white; font-weight: 800; background: linear-gradient(135deg,#8b5cf6,#4f46e5 50%,#22d3ee); box-shadow: 0 10px 28px rgba(99,102,241,.38); }
-    .brand-mark::after { content:""; position:absolute; inset:-55%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent); transform:rotate(30deg); animation:shine 5s infinite; }
-    @keyframes shine { 0%,72% { transform: translateX(-70%) rotate(30deg); } 100% { transform: translateX(70%) rotate(30deg); } }
-    .brand-copy { min-width: 0; }
-    .brand-copy strong { display: block; font-size: 15px; letter-spacing: -.02em; }
-    .brand-copy span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .brand-text h1 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
 
-    .new-chat { width:100%; min-height:46px; display:flex; align-items:center; justify-content:center; gap:9px; border:1px solid rgba(139,92,246,.35); border-radius:15px; color:white; cursor:pointer; background:linear-gradient(135deg,rgba(124,58,237,.94),rgba(79,70,229,.94)); box-shadow:0 12px 28px rgba(79,70,229,.22); transition:.22s ease; }
-    .new-chat:hover { transform:translateY(-2px); filter:brightness(1.08); }
-    .new-chat:active { transform:translateY(0); }
+        .brand-text p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
 
-    .section-label { margin: 24px 8px 10px; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
-    .quick-list { display:grid; gap:7px; }
-    .quick { width:100%; padding:11px 12px; display:flex; align-items:center; gap:10px; border:1px solid transparent; border-radius:13px; color:var(--muted); text-align:left; cursor:pointer; background:transparent; transition:.2s ease; }
-    .quick:hover { color:var(--text); border-color:var(--line); background:var(--card-hover); transform:translateX(2px); }
-    .quick svg { flex:0 0 auto; opacity:.82; }
-    .quick span { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:13px; }
+        .status {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .side-bottom { margin-top:auto; }
-    .connection { display:flex; align-items:center; gap:9px; padding:12px; border:1px solid var(--line); border-radius:14px; background:var(--card); }
-    .pulse { width:9px; height:9px; border-radius:50%; background:var(--success); box-shadow:0 0 0 0 rgba(66,230,164,.6); animation:pulse 2s infinite; }
-    @keyframes pulse { 70% { box-shadow:0 0 0 8px rgba(66,230,164,0); } 100% { box-shadow:0 0 0 0 rgba(66,230,164,0); } }
-    .connection div { min-width:0; }
-    .connection strong { display:block; font-size:12px; }
-    .connection small { color:var(--muted); font-size:10px; }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #22c55e;
+        }
 
-    .workspace { min-width:0; min-height:0; display:flex; flex-direction:column; }
-    header { min-height:70px; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; gap:14px; border-bottom:1px solid var(--line); background:rgba(255,255,255,.018); }
-    .header-title { min-width:0; display:flex; align-items:center; gap:12px; }
-    .mobile-menu { display:none; }
-    .title-text { min-width:0; }
-    .title-text h1 { margin:0; font-size:15px; letter-spacing:-.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .title-text p { margin:4px 0 0; color:var(--muted); font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .actions { display:flex; align-items:center; gap:8px; }
-    .icon-btn { width:39px; height:39px; display:grid; place-items:center; border:1px solid var(--line); border-radius:12px; color:var(--muted); cursor:pointer; background:var(--card); transition:.2s ease; }
-    .icon-btn:hover { color:var(--text); border-color:var(--line-strong); background:var(--card-hover); transform:translateY(-1px); }
-    .icon-btn.active { color:#c4b5fd; border-color:rgba(139,92,246,.4); background:rgba(139,92,246,.14); }
+        .chat-container {
+            height: calc(100vh - 72px);
+            padding: 20px;
+            background:
+                radial-gradient(circle at top right,
+                rgba(99,102,241,0.08),
+                transparent 35%);
+        }
 
-    .chat-area { position:relative; flex:1; min-height:0; padding:12px; }
-    .chat-card { position:relative; width:100%; height:100%; overflow:hidden; border:1px solid var(--line); border-radius:var(--radius-lg); background:#fff; box-shadow:0 16px 40px rgba(0,0,0,.18); }
-    iframe { position:absolute; inset:0; z-index:2; width:100%; height:100%; border:0; background:white; }
-    .loading { position:absolute; inset:0; z-index:3; display:grid; place-items:center; color:#475569; background:linear-gradient(135deg,#f8fafc,#eef2ff); transition:opacity .4s ease, visibility .4s ease; }
-    .loading.hidden { opacity:0; visibility:hidden; }
-    .loader-box { text-align:center; }
-    .loader-logo { width:52px; height:52px; margin:0 auto 15px; display:grid; place-items:center; border-radius:17px; color:white; font-weight:800; background:linear-gradient(135deg,#8b5cf6,#22d3ee); box-shadow:0 12px 28px rgba(99,102,241,.28); animation:breathe 1.6s ease-in-out infinite; }
-    @keyframes breathe { 50% { transform:scale(1.08); box-shadow:0 16px 34px rgba(99,102,241,.4); } }
-    .loader-box strong { display:block; color:#27324b; font-size:14px; }
-    .loader-box span { display:block; margin-top:6px; color:#8490a6; font-size:11px; }
-
-    .toast { position:fixed; z-index:20; left:50%; bottom:28px; padding:11px 15px; display:flex; align-items:center; gap:8px; border:1px solid var(--line-strong); border-radius:999px; color:var(--text); background:var(--glass-solid); box-shadow:0 15px 40px rgba(0,0,0,.3); opacity:0; pointer-events:none; transform:translate(-50%,14px); transition:.25s ease; font-size:12px; }
-    .toast.show { opacity:1; transform:translate(-50%,0); }
-
-    .app.sidebar-hidden { grid-template-columns:0 minmax(0,1fr); }
-    .app.sidebar-hidden aside { padding-left:0; padding-right:0; overflow:hidden; border-right:0; }
-    .app.fullscreen { width:100%; max-width:none; border-radius:0; border:0; }
-    body:has(.app.fullscreen) .page { padding:0; }
-
-    @media (max-width: 860px) {
-      .page { padding:0; }
-      .app { border:0; border-radius:0; grid-template-columns:minmax(0,1fr); }
-      aside { position:absolute; z-index:10; left:0; top:0; bottom:0; width:min(82vw,290px); transform:translateX(-105%); transition:transform .28s ease; background:var(--glass-solid); box-shadow:20px 0 50px rgba(0,0,0,.35); }
-      .app.menu-open aside { transform:translateX(0); }
-      .mobile-menu { display:grid; }
-      .chat-area { padding:8px; }
-      .chat-card { border-radius:16px; }
-      header { min-height:64px; padding:10px 12px; }
-      .title-text p { max-width:42vw; }
-      #sidebarToggle { display:none; }
-    }
-
-    @media (max-width: 520px) {
-      .actions .desktop-only { display:none; }
-      .title-text p { display:none; }
-      .chat-area { padding:0; }
-      .chat-card { border:0; border-radius:0; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; }
-    }
-  </style>
+        .chat-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 18px;
+            overflow: hidden;
+            background: white;
+            box-shadow:
+                0 10px 40px rgba(15,23,42,0.08),
+                0 2px 10px rgba(15,23,42,0.05);
+        }
+    </style>
 </head>
+
 <body>
-  <div class="aurora" aria-hidden="true"><span class="orb one"></span><span class="orb two"></span><span class="orb three"></span></div>
-  <div class="noise" aria-hidden="true"></div>
 
-  <div class="page">
-    <div class="app" id="app">
-      <aside id="sidebar">
+    <header class="header">
         <div class="brand">
-          <div class="brand-mark">AI</div>
-          <div class="brand-copy"><strong>Flowchart Studio</strong><span>Copilot-powered workspace</span></div>
+            <div class="logo">L</div>
+
+            <div class="brand-text">
+                <h1>Lumina Learning Concierge</h1>
+                <p>AI-Powered Enterprise Learning Assistant</p>
+            </div>
         </div>
 
-        <button class="new-chat" id="newChat" type="button" title="대화를 새로 시작합니다">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          새 대화 시작
-        </button>
-
-        <div class="section-label">Workspace</div>
-        <div class="quick-list">
-          <button class="quick" data-message="새로운 플로우차트 설계를 시작해 줘" type="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/><path d="M10 6.5h4a3 3 0 0 1 3 3V14"/></svg><span>플로우차트 설계</span></button>
-          <button class="quick" data-message="업무 프로세스를 분석해 줘" type="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"/></svg><span>프로세스 분석</span></button>
-          <button class="quick" data-message="기존 흐름을 더 효율적으로 개선해 줘" type="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span>흐름 개선하기</span></button>
-          <button class="quick" data-message="의사결정 구조를 정리해 줘" type="button"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v6M12 15v6M5 9h14v6H5z"/></svg><span>의사결정 구조</span></button>
+        <div class="status">
+            <span class="status-dot"></span>
+            <span>Online</span>
         </div>
+    </header>
 
-        <div class="side-bottom">
-          <div class="connection"><span class="pulse"></span><div><strong>Agent Online</strong><small>Microsoft Copilot Studio</small></div></div>
-        </div>
-      </aside>
+    <main class="chat-container">
+        <iframe
+            class="chat-frame"
+            src="https://copilotstudio.microsoft.com/environments/9324e73a-cd4e-e049-b7ba-177af6165e9c/bots/crbf2_ailearningcoach2_4C7Exf/webchat?__version__=2&enableFileAttachment=false&cliAgent=true">
+        </iframe>
+    </main>
 
-      <section class="workspace">
-        <header>
-          <div class="header-title">
-            <button class="icon-btn mobile-menu" id="mobileMenu" type="button" aria-label="메뉴 열기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-            <div class="title-text"><h1>Flowchart Agent</h1><p>아이디어를 구조화하고 업무 흐름을 시각화하세요</p></div>
-          </div>
-          <div class="actions">
-            <button class="icon-btn desktop-only" id="sidebarToggle" type="button" aria-label="사이드바 접기" title="사이드바 접기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 3v18"/></svg></button>
-            <button class="icon-btn" id="reload" type="button" aria-label="에이전트 새로고침" title="새로고침"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6v5h-5"/><path d="M19 11a8 8 0 1 0 1 5"/></svg></button>
-            <button class="icon-btn" id="theme" type="button" aria-label="테마 전환" title="테마 전환"><svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
-            <button class="icon-btn desktop-only" id="fullscreen" type="button" aria-label="전체 화면" title="전체 화면"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg></button>
-          </div>
-        </header>
-
-        <main class="chat-area">
-          <div class="chat-card">
-            <div class="loading" id="loading"><div class="loader-box"><div class="loader-logo">AI</div><strong>에이전트를 연결하고 있습니다</strong><span>잠시만 기다려 주세요</span></div></div>
-            <iframe id="copilotFrame" title="Microsoft Copilot Studio Flowchart Agent" src="https://copilotstudio.microsoft.com/environments/9324e73a-cd4e-e049-b7ba-177af6165e9c/bots/crbf2_flowchart_agent_02_hhukOx/webchat?__version__=2&amp;enableFileAttachment=false&amp;cliAgent=true" allow="clipboard-read; clipboard-write; microphone" referrerpolicy="strict-origin-when-cross-origin" loading="eager"></iframe>
-          </div>
-        </main>
-      </section>
-    </div>
-  </div>
-
-  <div class="toast" id="toast"><span class="pulse"></span><span id="toastText">완료되었습니다</span></div>
-
-  <script>
-    const app = document.getElementById('app');
-    const frame = document.getElementById('copilotFrame');
-    const loading = document.getElementById('loading');
-    const toast = document.getElementById('toast');
-    const toastText = document.getElementById('toastText');
-    const baseUrl = frame.src;
-    let toastTimer;
-
-    function notify(message) {
-      toastText.textContent = message;
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), 2100);
-    }
-
-    function reloadAgent(message = '에이전트를 새로고침했습니다') {
-      loading.classList.remove('hidden');
-      frame.src = 'about:blank';
-      setTimeout(() => { frame.src = baseUrl; notify(message); }, 120);
-    }
-
-    frame.addEventListener('load', () => {
-      if (frame.src !== 'about:blank') setTimeout(() => loading.classList.add('hidden'), 350);
-    });
-
-    document.getElementById('reload').addEventListener('click', () => reloadAgent());
-    document.getElementById('newChat').addEventListener('click', () => reloadAgent('새 대화를 시작합니다'));
-
-    document.getElementById('sidebarToggle').addEventListener('click', () => {
-      app.classList.toggle('sidebar-hidden');
-    });
-
-    document.getElementById('mobileMenu').addEventListener('click', () => app.classList.toggle('menu-open'));
-    document.querySelector('.workspace').addEventListener('click', (e) => {
-      if (window.innerWidth <= 860 && app.classList.contains('menu-open') && !e.target.closest('#mobileMenu')) app.classList.remove('menu-open');
-    });
-
-    document.getElementById('theme').addEventListener('click', () => {
-      document.body.classList.toggle('light');
-      const light = document.body.classList.contains('light');
-      localStorage.setItem('flowchart-theme', light ? 'light' : 'dark');
-      notify(light ? '라이트 테마로 변경했습니다' : '다크 테마로 변경했습니다');
-    });
-
-    if (localStorage.getItem('flowchart-theme') === 'light') document.body.classList.add('light');
-
-    document.getElementById('fullscreen').addEventListener('click', async () => {
-      try {
-        if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
-        else await document.exitFullscreen();
-      } catch (_) {
-        app.classList.toggle('fullscreen');
-      }
-    });
-
-    document.addEventListener('fullscreenchange', () => {
-      app.classList.toggle('fullscreen', Boolean(document.fullscreenElement));
-    });
-
-    document.querySelectorAll('.quick').forEach(button => {
-      button.addEventListener('click', () => {
-        /* Cross-origin iframe 보안상 내부 입력창에 직접 값을 넣을 수 없어 클립보드로 제공합니다. */
-        const message = button.dataset.message;
-        navigator.clipboard?.writeText(message).then(() => notify('추천 문구를 복사했습니다')).catch(() => notify('추천: ' + message));
-        app.classList.remove('menu-open');
-      });
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); reloadAgent('새 대화를 시작합니다'); }
-      if (e.key === 'Escape') app.classList.remove('menu-open');
-    });
-  </script>
 </body>
 </html>
